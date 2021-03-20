@@ -1,6 +1,7 @@
 package Model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "Users")
 @Table(
@@ -54,6 +55,9 @@ public class Users {
 
     @ManyToOne
     private Role role;
+
+    @OneToMany( targetEntity = Address.class, mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Address> addresses;
 
     public Users(Long id,
                  String userName,
