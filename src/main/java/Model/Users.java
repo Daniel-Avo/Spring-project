@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity(name = "Users")
 @Table(
-        name = "users",
+        name = "\"users\"",
         uniqueConstraints = {
                 @UniqueConstraint( name = "users_username_unique", columnNames = "user_name"),
                 @UniqueConstraint( name = "users_email_unique", columnNames = "email")
@@ -52,6 +52,8 @@ public class Users {
     )
     private String password;
 
+    @ManyToOne
+    private Role role;
 
     public Users(Long id,
                  String userName,
@@ -65,5 +67,45 @@ public class Users {
 
     public Users() {
 
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
