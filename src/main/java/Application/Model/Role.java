@@ -1,4 +1,5 @@
-package Model;
+/*
+package Application.Model;
 
 import javax.persistence.*;
 import java.util.List;
@@ -72,3 +73,4 @@ public class Role {
         this.users = users;
     }
 }
+*/

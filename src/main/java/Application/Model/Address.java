@@ -1,4 +1,5 @@
-package Model;
+/*
+package Application.Model;
 
 import javax.persistence.*;
 
@@ -92,3 +93,4 @@ public class Address {
         this.country = country;
     }
 }
+ */
