@@ -17,7 +17,6 @@ public class UsersConfig {
                     "Maria",
                     "maria@123",
                     "password"
-
             );
 
             repository.save(users);

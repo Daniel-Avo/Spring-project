@@ -3,11 +3,13 @@ package Application.Controllers;
 import Application.Model.Users;
 import Application.Services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping(path = "/users")
 public class UsersController {
 
@@ -18,9 +20,10 @@ public class UsersController {
         this.usersService = usersService;
     }
 
-    @GetMapping
-    public List<Users> listUsers(){
-        return usersService.listUsers();
+    @GetMapping("/list")
+    public String listUsers(Model model){
+        model.addAttribute("users", usersService.listUsers());
+        return "users/list";
     }
 
     @PostMapping
