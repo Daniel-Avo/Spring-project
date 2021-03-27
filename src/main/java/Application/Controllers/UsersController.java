@@ -23,11 +23,14 @@ public class UsersController {
     @GetMapping("/list")
     public String listUsers(Model model){
         model.addAttribute("users", usersService.listUsers());
+        model.addAttribute("newUser", new Users());
         return "users/list";
     }
 
-    @PostMapping
-    public void postUser(@RequestBody Users users){
-        usersService.postUser(users);
+    @PostMapping("/add")
+    public String addUser(@ModelAttribute Users user){
+        usersService.addUser(user);
+        System.out.println(user);
+        return "redirect:/users/list";
     }
 }

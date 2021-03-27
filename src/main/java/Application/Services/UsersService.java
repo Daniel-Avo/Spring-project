@@ -4,6 +4,7 @@ import Application.Model.Users;
 import Application.Repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class UsersService {
         return usersRepository.findAll();
     }
 
-    public void postUser(Users users) {
-        usersRepository.save(users);
+    public void addUser(Users user) {
+        usersRepository.save(user);
     }
 }
