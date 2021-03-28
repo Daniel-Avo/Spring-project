@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Users list</title>
@@ -12,6 +12,7 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Password</th>
+                <th>Role</th>
             </tr>
         </thead>
     <tbody>
@@ -20,14 +21,23 @@
                 <td th:text="${user.getUserName()}"></td>
                 <td th:text="${user.getEmail()}"></td>
                 <td th:text="${user.getPassword()}"></td>
+                <td th:text="${user.getRole().getUserRole()}"></td>
+                <td><a th:href="@{/users/delete/{id}(id=${user.getId()})}">D</a></td>
             </tr>
     </tbody>
 </table>
 
 <form th:action="@{/users/add}" th:object="${newUser}" method="post">
-    <p>User Name: <input type="text" th:field="*{userName}"></p>
+    <p>User Name: <input type="text" th:field="*{userName}" class="form-control"></p>
     <p>Email:     <input type="text" th:field="*{email}"></p>
     <p>Password:  <input type="text" th:field="*{password}"></p>
+    <p>Role:
+        <select th:field="*{role}">
+            <option th:each="role: ${roles}" th:value="${role.getId()}" th:utext="${role.getUserRole()}">
+            </option>
+        </select>
+
+    </p>
     <p><input type="submit" value="Add User"></p>
 </form>
 </body>

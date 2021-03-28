@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Users list</title>
+</head>
+<body>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Role</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="role: ${roles}">
+        <td th:text="${role.getId()}"></td>
+        <td th:text="${role.getUserRole()}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<form th:action="@{/roles/add}" th:object="${newRole}" method="post">
+    <p>Role Name: <input type="text" th:field="*{userRole}"></p>
+    <p><input type="submit" value="Add Role"></p>
+</form>
+</body>
+</html>

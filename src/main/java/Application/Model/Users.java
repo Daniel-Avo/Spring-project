@@ -1,7 +1,6 @@
 package Application.Model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity(name = "Users")
 @Table(
@@ -52,13 +51,14 @@ public class Users {
             updatable = false
     )
     private String password;
-/*
+
     @ManyToOne
     private Role role;
 
-    @OneToMany( targetEntity = Address.class, mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Address> addresses;
-*/
+    /*
+        @OneToMany( targetEntity = Address.class, mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+        private List<Address> addresses;
+    */
     public Users(Long id,
                  String userName,
                  String email,
@@ -105,7 +105,6 @@ public class Users {
         this.password = password;
     }
 
-    /*
     public Role getRole() {
         return role;
     }
@@ -113,8 +112,6 @@ public class Users {
     public void setRole(Role role) {
         this.role = role;
     }
-
-     */
 
     @Override
     public String toString() {
