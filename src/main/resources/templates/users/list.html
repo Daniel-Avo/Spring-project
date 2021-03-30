@@ -8,21 +8,19 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Password</th>
                 <th>Role</th>
             </tr>
         </thead>
     <tbody>
             <tr th:each="user: ${users}">
-                <td th:text="${user.getId()}"></td>
                 <td th:text="${user.getUserName()}"></td>
                 <td th:text="${user.getEmail()}"></td>
-                <td th:text="${user.getPassword()}"></td>
                 <td th:text="${user.getRole().getUserRole()}"></td>
-                <td><a th:href="@{/users/delete/{id}(id=${user.getId()})}">D</a></td>
+                <div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
+                    <td><a th:href="@{/users/delete/{id}(id=${user.getId()})}">D</a></td>
+                </div>
             </tr>
     </tbody>
 </table>

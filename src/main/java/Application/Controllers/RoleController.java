@@ -1,7 +1,6 @@
 package Application.Controllers;
 
 import Application.Model.Role;
-import Application.Model.Users;
 import Application.Services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
