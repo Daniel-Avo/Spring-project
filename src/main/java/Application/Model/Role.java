@@ -1,6 +1,9 @@
 package Application.Model;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity(name = "role")
@@ -33,6 +36,7 @@ public class Role {
             nullable = false,
             columnDefinition = "TEXT"
     )
+    @NotEmpty(message = "*Enter role name")
     private String userRole;
 
     @OneToMany( targetEntity = Users.class, mappedBy = "role", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -70,5 +74,14 @@ public class Role {
 
     public void setUsers(List<Users> users) {
         this.users = users;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", userRole='" + userRole + '\'' +
+                ", users=" + users +
+                '}';
     }
 }

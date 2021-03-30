@@ -1,6 +1,11 @@
 package Application.Model;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Entity(name = "Users")
 @Table(
@@ -34,6 +39,8 @@ public class Users {
             columnDefinition = "TEXT",
             updatable = false
     )
+    @Length(min = 5, message = "*User name is too short")
+    @NotEmpty(message = "*Enter user name")
     private String userName;
 
     @Column(
@@ -42,6 +49,8 @@ public class Users {
             columnDefinition = "TEXT",
             updatable = false
     )
+    @Email(message = "*Provide a valid email")
+    @NotEmpty(message = "*Enter email")
     private String email;
 
     @Column(
@@ -50,15 +59,16 @@ public class Users {
             columnDefinition = "TEXT",
             updatable = false
     )
+    @Length(min = 5, message = "*Password is too short")
+    @NotEmpty(message = "*Enter password")
     private String password;
 
     @ManyToOne
     private Role role;
 
-    /*
-        @OneToMany( targetEntity = Address.class, mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-        private List<Address> addresses;
-    */
+    @OneToMany( targetEntity = Topics.class, mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Topics> topics;
+
     public Users(Long id,
                  String userName,
                  String email,
