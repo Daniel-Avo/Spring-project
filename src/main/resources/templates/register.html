@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+
+<form th:action="@{/add}" th:object="${newUser}" method="post">
+    <p>User Name: <input type="text" th:field="*{userName}"></p>
+    <p>Email:     <input type="text" th:field="*{email}"></p>
+    <p>Password:  <input type="text" th:field="*{password}"></p>
+    <p>Role:
+        <select th:field="*{role}">
+            <option th:each="role: ${roles}" th:value="${role.getId()}" th:utext="${role.getUserRole()}">
+            </option>
+        </select>
+    </p>
+    <p><input type="submit" value="Add User"></p>
+</form>
+
+</body>
+</html>

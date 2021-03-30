@@ -25,15 +25,7 @@ public class UsersController {
     public String listUsers(Model model){
         model.addAttribute("users", usersService.listUsers());
         model.addAttribute("roles", roleService.listRoles());
-        model.addAttribute("newUser", new Users());
         return "users/list";
-    }
-
-    @PostMapping("/add")
-    public String addUser(@ModelAttribute Users user){
-        usersService.addUser(user);
-        System.out.println(user);
-        return "redirect:/users/list";
     }
 
     @GetMapping("/delete/{id}")
@@ -41,6 +33,5 @@ public class UsersController {
         model.addAttribute("message", usersService.deleteUser(id));
         return "redirect:/users/list";
     }
-
 
 }

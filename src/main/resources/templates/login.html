@@ -13,6 +13,7 @@
         <p>User Password : <input type="password" name="password" placeholder="Enter User Password"/></p>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <p><button type="submit">Login</button></p>
+        <a th:href="@{/register}">Register</a>
     </form>
 </body>
 </html>
