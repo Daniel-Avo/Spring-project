@@ -2,7 +2,6 @@ package Application.Services;
 
 import Application.Model.Users;
 import Application.Repositories.UsersRepository;
-import Application.Security.PasswordConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,6 +21,7 @@ public class UsersDetailService implements UserDetailsService {
 
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
     public UsersDetailService(UsersRepository usersRepository, PasswordEncoder passwordEncoder) {
         this.usersRepository = usersRepository;
         this.passwordEncoder = passwordEncoder;

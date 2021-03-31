@@ -9,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 @Table(
         name = "\"topics\"",
         uniqueConstraints = {
-                @UniqueConstraint( name = "users_username_unique", columnNames = "topic_name")
+                @UniqueConstraint( name = "topic_name_unique", columnNames = "topic_name")
         }
 )
 public class Topics {
@@ -36,7 +36,7 @@ public class Topics {
             columnDefinition = "TEXT",
             updatable = false
     )
-    @Length(min = 10, message = "*Topic name is too short")
+    @Length(min = 5, message = "*Topic name is too short")
     @NotEmpty(message = "*Enter topic")
     private String topicName;
 
@@ -46,17 +46,15 @@ public class Topics {
             columnDefinition = "TEXT",
             updatable = false
     )
-    @Length(min = 30, message = "*Description is too short")
+    @Length(min = 10, message = "*Description is too short")
     @NotEmpty(message = "*Enter description")
     private String description;
 
     @Column(
             name = "comment",
-            nullable = false,
             columnDefinition = "TEXT"
     )
     @Length(min = 10, message = "*Comment is too short")
-    @NotEmpty(message = "*Enter comment")
     private String comment;
 
     @ManyToOne
