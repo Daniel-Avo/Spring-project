@@ -22,6 +22,7 @@
 
 <form th:action="@{/roles/add}" th:object="${newRole}" method="post">
     <p>Role Name: <input type="text" th:field="*{userRole}"></p>
+    <span th:style="'color:red'" th:if="${#fields.hasErrors('userRole')}" th:errors="*{userRole}">Name Error</span>
     <p><input type="submit" value="Add Role"></p>
 </form>
 </body>

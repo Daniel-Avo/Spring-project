@@ -6,10 +6,13 @@ import Application.Services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/")
@@ -36,8 +39,12 @@ public class TemplateController {
         return "/register";
     }
 
-    @PostMapping("add")
-    public String addUser(@ModelAttribute Users user){
+    @PostMapping("register")
+    public String addUser(@Valid @ModelAttribute("newUser") Users user, BindingResult bindingResult){
+
+        if(bindingResult.hasErrors()){
+            return "/register";
+        }
         usersService.addUser(user);
         System.out.println(user);
         return "redirect:/login";

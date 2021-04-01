@@ -1,9 +1,11 @@
 package Application.Model;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.Date;
 
 @Entity(name = "topics")
 @Table(
@@ -50,12 +52,10 @@ public class Topics {
     @NotEmpty(message = "*Enter description")
     private String description;
 
-    @Column(
-            name = "comment",
-            columnDefinition = "TEXT"
-    )
-    @Length(min = 10, message = "*Comment is too short")
-    private String comment;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_date", nullable = false, updatable = false)
+    @CreationTimestamp
+    private Date createDate;
 
     @ManyToOne
     private Users users;
@@ -84,21 +84,12 @@ public class Topics {
         this.description = description;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
     @Override
     public String toString() {
         return "Topics{" +
                 "id=" + id +
                 ", topicName='" + topicName + '\'' +
                 ", description='" + description + '\'' +
-                ", comment='" + comment + '\'' +
                 '}';
     }
 }
