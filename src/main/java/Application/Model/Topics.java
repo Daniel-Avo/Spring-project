@@ -60,6 +60,22 @@ public class Topics {
     @ManyToOne
     private Users users;
 
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Users getUsers() {
+        return users;
+    }
+
+    public void setUsers(Users users) {
+        this.users = users;
+    }
+
     public Long getId() {
         return id;
     }
