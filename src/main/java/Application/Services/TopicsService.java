@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TopicsService {
@@ -28,5 +29,9 @@ public class TopicsService {
     public String deleteTopic(Long id) {
         topicsRepository.deleteById(id);
         return "Topic deleted successfully";
+    }
+
+    public Optional<Topics> findTopicById(Long id){
+        return topicsRepository.findById(id);
     }
 }

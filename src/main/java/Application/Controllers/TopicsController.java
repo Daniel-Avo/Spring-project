@@ -30,34 +30,9 @@ public class TopicsController {
     }
 
     @GetMapping
-    public String listTopic(Principal principal, Model model){
-
-
-        Optional<Users> user = usersService.findByUsername(principal.getName());
-
-        if (user.isPresent()){
-            Topics topic = new Topics();
-            topic.setUsers(user.get());
-
-            model.addAttribute("newTopic", topic);
-            model.addAttribute("topics", topicsService.listTopics());
-
-            return "forum/forum";
-        }
-
-        return "/error";
-    }
-
-    @PostMapping
-    public String addTopic(@Valid @ModelAttribute("newTopic") Topics topic, BindingResult bindingResult){
-
-        System.out.println(topic.getUsers().getUserName());
-        if(bindingResult.hasErrors()){
-            return "forum/forum";
-        }
-        topicsService.addTopic(topic);
-        System.out.println(topic);
-        return "redirect:/forum";
+    public String listTopic( Model model) {
+        model.addAttribute("topics", topicsService.listTopics());
+        return "forum/forum";
     }
 
     @GetMapping("/delete/{id}")
@@ -66,4 +41,40 @@ public class TopicsController {
         model.addAttribute("message", topicsService.deleteTopic(id));
         return "redirect:/forum";
     }
+
+    @GetMapping("/topic/{id}")
+    public String showTopic(@PathVariable Long id, Model model){
+
+        model.addAttribute("topic", topicsService.findTopicById(id));
+        return "/forum/topic";
+    }
+
+    @GetMapping("topicform")
+    public String newTopic(Principal principal, Model model){
+
+        Optional<Users> user = usersService.findByUsername(principal.getName());
+
+        if (user.isPresent()){
+            Topics topic = new Topics();
+            topic.setUsers(user.get());
+
+            model.addAttribute("newTopic", topic);
+
+            return "/forum/topicform";
+        }
+
+        return "/error";
+    }
+
+
+    @PostMapping("topicform")
+    public String addTopic(@Valid @ModelAttribute("newTopic") Topics topic, BindingResult bindingResult){
+
+        if(bindingResult.hasErrors()){
+            return "/forum/topicform";
+        }
+        topicsService.addTopic(topic);
+        return "redirect:/forum";
+    }
+
 }

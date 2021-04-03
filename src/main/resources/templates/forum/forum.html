@@ -6,24 +6,13 @@
 </head>
 <body>
     <div th:each="topic : ${topics}">
-        <h2 th:text="*{topic.getTopicName()}"></h2>
-        <p th:text="*{topic.getDescription()}"></p>
-        <p th:text="*{topic.getUsers().getUserName()}"></p>
+        <a th:href="@{/forum/topic/{id}(id=${topic.getId()})}"><p th:text="*{topic.getTopicName()}"></p></a>
         <div th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
             <td><a th:href="@{/forum/delete/{id}(id=${topic.getId()})}">D</a></td>
         </div>
     </div>
 
-    <h3>Add topic</h3>
-    <form th:action="@{/forum}" th:object="${newTopic}" method="post">
+    <a th:href="@{/forum/topicform}">Add Topic</a>
 
-        <p>Topic: <input type="text" th:field="*{topicName}"></p>
-        <span th:style="'color:red'" th:if="${#fields.hasErrors('topicName')}" th:errors="*{topicName}">Name Error</span>
-
-        <p>Description:     <input type="text" th:field="*{description}"></p>
-        <span th:style="'color:red'" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Name Error</span>
-
-        <p><input type="submit" value="Add topic"></p>
-    </form>
 </body>
 </html>

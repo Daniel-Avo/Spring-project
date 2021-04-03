@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Topic Form</title>
+</head>
+<body>
+<h3>Add topic</h3>
+<form th:action="@{/forum/topicform}" th:object="${newTopic}" method="post">
+
+    <p>Topic: <input type="text" th:field="*{topicName}"></p>
+    <span th:style="'color:red'" th:if="${#fields.hasErrors('topicName')}" th:errors="*{topicName}">Name Error</span>
+
+    <p>Description:     <input type="text" th:field="*{description}"></p>
+    <span th:style="'color:red'" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Name Error</span>
+
+    <p><input type="submit" value="Add topic"></p>
+
+</form>
+</body>
+</html>
