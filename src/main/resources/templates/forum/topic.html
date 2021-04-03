@@ -5,9 +5,24 @@
     <title>Topic</title>
 </head>
 <body>
+
     <h1 th:text="${topic.get().getTopicName()}"></h1>
     <h4 th:text="${topic.get().getDescription()}"></h4>
     <p th:text="${topic.get().getUsers().getUserName()}"></p>
     <p th:text="${topic.get().getCreateDate()}"></p>
+
+    <h3>Comments</h3>
+    <div th:each="comment: ${topic.get().getComments()}">
+        <td th:text="${comment.getCommentContent()}">     </td>
+        <td th:text="${comment.getCreateDate()}">      </td>
+        <td th:text="${comment.getUsers().getUserName()}"></td>
+    </div>
+
+    <form th:action="@{/forum/addcomment/{id}(id=${topic.get().getId()})}" th:object="${newComment}" method="post">
+        <input type="text" th:field="*{commentContent}">
+        <span th:style="'color:red'" th:if="${#fields.hasErrors('commentContent')}" th:errors="*{commentContent}">Name Error</span>
+        <p><input type="submit" value="Add comment"></p>
+    </form>
+
 </body>
 </html>

@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "topics")
 @Table(
@@ -60,6 +61,9 @@ public class Topics {
     @ManyToOne
     private Users users;
 
+    @OneToMany( targetEntity = Comments.class, mappedBy = "topics", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Comments> comments;
+
     public Date getCreateDate() {
         return createDate;
     }
@@ -98,6 +102,14 @@ public class Topics {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
     }
 
     @Override

@@ -1,7 +1,9 @@
 package Application.Controllers;
 
+import Application.Model.Comments;
 import Application.Model.Topics;
 import Application.Model.Users;
+import Application.Services.CommentsService;
 import Application.Services.TopicsService;
 import Application.Services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +18,19 @@ import java.security.Principal;
 import java.util.Optional;
 
 @Controller
-@SessionAttributes("newTopic")
+@SessionAttributes({"newTopic", "topic", "newComment"})
 @RequestMapping("/forum")
 public class TopicsController {
 
     private final TopicsService topicsService;
     private final UsersService usersService;
+    private final CommentsService commentsService;
 
     @Autowired
-    public TopicsController(TopicsService topicsService, UsersService usersService) {
+    public TopicsController(TopicsService topicsService, UsersService usersService, CommentsService commentsService) {
         this.topicsService = topicsService;
         this.usersService = usersService;
+        this.commentsService = commentsService;
     }
 
     @GetMapping
@@ -43,10 +47,23 @@ public class TopicsController {
     }
 
     @GetMapping("/topic/{id}")
-    public String showTopic(@PathVariable Long id, Model model){
-
+    public String showTopic(@PathVariable Long id, Model model, Principal principal){
         model.addAttribute("topic", topicsService.findTopicById(id));
-        return "/forum/topic";
+
+        Optional<Users> user = usersService.findByUsername(principal.getName());
+
+        if(user.isPresent()){
+            Comments comment = new Comments();
+            comment.setTopics(topicsService.findTopicById(id).get());
+            comment.setUsers(user.get());
+
+            model.addAttribute("newComment",comment);
+
+            return "/forum/topic";
+        }
+
+        return "/error";
+
     }
 
     @GetMapping("topicform")
@@ -75,6 +92,19 @@ public class TopicsController {
         }
         topicsService.addTopic(topic);
         return "redirect:/forum";
+    }
+
+    @PostMapping("/addcomment/{id}")
+    public String addComment(@PathVariable Long id, @Valid @ModelAttribute("newComment") Comments comment, @ModelAttribute("topic") Topics topic, BindingResult bindingResult){
+
+        if(bindingResult.hasErrors()){
+            return "redirect:/forum/topic/{id}";
+        }
+        commentsService.addComment(comment);
+        topic.getComments().add(comment);
+
+        return "redirect:/forum/topic/{id}";
+
     }
 
 }

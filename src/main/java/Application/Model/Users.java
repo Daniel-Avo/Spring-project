@@ -69,6 +69,9 @@ public class Users {
     @OneToMany( targetEntity = Topics.class, mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Topics> topics;
 
+    @OneToMany( targetEntity = Comments.class, mappedBy = "users", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Comments> comments;
+
     public Users(Long id,
                  String userName,
                  String email,
