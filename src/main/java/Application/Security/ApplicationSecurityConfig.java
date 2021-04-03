@@ -22,6 +22,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                .defaultSuccessUrl("/forum", true)
                 .permitAll()
                 .and()
                 .logout()
