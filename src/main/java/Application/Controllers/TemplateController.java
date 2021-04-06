@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
@@ -42,8 +43,17 @@ public class TemplateController {
     @PostMapping("register")
     public String addUser(@Valid @ModelAttribute("newUser") Users user, BindingResult bindingResult){
 
+        Optional<Users> optionalUser = usersService.findByUsername(user.getUserName());
+
         if(bindingResult.hasErrors()){
+
             return "/register";
+
+        }else if (optionalUser.isPresent()){
+            bindingResult.rejectValue("userName", "error.userName", "This user name is used");
+
+            return "/register";
+
         }
         usersService.addUser(user);
         System.out.println(user);
